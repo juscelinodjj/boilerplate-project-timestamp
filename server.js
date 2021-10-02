@@ -27,7 +27,8 @@ app.get('/api', (req, res) => {
 
 app.get('/api/:date?', (req, res) => {
   const entry = req.params.date;
-  const date = entry.includes('-') ? new Date(entry) : new Date(Number(entry));
+  const date = entry.match(/^[\d]+$/) === null
+    ? new Date(entry) : new Date(Number(entry));
   const unix = date.valueOf();
   const utc = date.toUTCString();
   if (!unix) {
